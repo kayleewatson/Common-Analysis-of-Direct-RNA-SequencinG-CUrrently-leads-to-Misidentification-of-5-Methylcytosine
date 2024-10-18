@@ -1,4 +1,4 @@
-# Common Analysis of Direct RNA SequencinG CUrrently leads to Misidentification of 5-Methylcytosine Modifications
+# Common analysis of direct RNA sequencinG CUrrently leads to misidentification of m5C at GCU motifs
 Kaylee Watson<br />
 
 Commands and scripts used in the 2023 Life Science Alliance publication: [Link to Publication](https://www.life-science-alliance.org/content/7/2/e202302201)
