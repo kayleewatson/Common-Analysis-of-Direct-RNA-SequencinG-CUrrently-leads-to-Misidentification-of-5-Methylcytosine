@@ -237,6 +237,7 @@ wc -l final*
 
 #### Plot Modified Fractions
 Use [boxplot_mods_multisample.r](https://github.com/kayleewatson/Common-Analysis-of-Direct-RNA-SequencinG-CUrrently-leads-to-Misidentification-of-5-Methylcytosine/blob/main/boxplot_mods_multisample.r) script
+
 Package requirements:
 * ggplot2
 Command to run R script on final concatenated file:
@@ -245,15 +246,23 @@ boxplot_mods_multisample.r modified_fractions_all.tsv
 ```
 
 #### Z-test and Cohen's d
-Use [ztest.r](https://github.com/kayleewatson/Common-Analysis-of-Direct-RNA-SequencinG-CUrrently-leads-to-Misidentification-of-5-Methylcytosine/blob/main/ztest.r) script
+Use [ztest.r](https://github.com/kayleewatson/Common-Analysis-of-Direct-RNA-SequencinG-CUrrently-leads-to-Misidentification-of-5-Methylcytosine/blob/main/ztest.r) script for z-test and [cohend.r](https://github.com/kayleewatson/Common-Analysis-of-Direct-RNA-SequencinG-CUrrently-leads-to-Misidentification-of-5-Methylcytosine/blob/main/cohend.r) script for Cohen's d
+
 Package requirements:
 * dplyr
+* psych
 Command to run Z-test script:
 ```
 GCU_BED = path_to_final_GCU_file
 # the 'final' output from the previous "Add a column with the sample name, then combine all 'final' files in a single file for R" step
 NONGCU_BED = path_to_final_nonGCU_file
 ztest.r $GCU_BED $NONGCU_BED
+```
+Command to run Cohen's d script:
+```
+GCU_BED = path_to_final_GCU_bed_file
+NONGCU_BED = path_to_final_nonGCU_file
+~/scripts/ttest.r $GCU_BED $NONGCU_BED
 ```
 
 ## Modified Fraction Density Plots - Sindbis virus
@@ -293,33 +302,17 @@ awk 'NR==FNR{a[$2];next} $2 in a{print}' common_positions.txt $NOZERO_BED > $FIL
 
 ### Create file with 3-mer and modified fractions
 
-#### Bash script to create 3-mer file (create_3mer_fraction_file.sh):
+#### Bash script to create 3-mer file:
+Use [create_3mer_fraction_file.sh](https://github.com/kayleewatson/Common-Analysis-of-Direct-RNA-SequencinG-CUrrently-leads-to-Misidentification-of-5-Methylcytosine/blob/main/create_3mer_fraction_file.sh) script and flanking_nt_intervals.py script
+
+Command to run bash script
 ```
-#!/usr/bin/env bash
-
-#this script requires 3 arguments:
-## first argument is the path to the bed file of modified fractions (FILTERED_FILE)
-## second argument is the path to the reference fasta
-## third argument is the sample name
-
-tmpfile=$(mktemp --suffix=.txt)
-tmpfile2=$(mktemp --suffix=.txt)
-flanking_tsv=$(mktemp --suffix=.tsv)
-tmptsv=$(mktemp --suffix=.tsv)
-
-awk '{print $1">"$2":"$3"<"$4"+"$5}' $1 > $tmpfile
-
-python ~/scripts/flanking_nt_intervals.py $tmpfile > $tmpfile2
-
-bedtools getfasta -fi $2 -bed $tmpfile2 -tab | awk -F ":" 'OFS="\t" {print $1,$2,$3}' | awk -F "-" 'OFS="\t" {print $1,$2,$3,$4}' > $tmptsv
-
-join -j 2 -o 1.5,2.4 <(sort -k 1b,2 $tmpfile2) <(sort -k 1b,2 $tmptsv) | perl -pe 'tr/tT/uU/' | awk -v myvar=$3 '{print $1"\t"$2"\t"myvar}'
-
-rm $tmpfile
-rm $tmpfile2
-rm $flanking_tsv
-rm $tmptsv
+FILTERED_FILE = path_to_filtered_bed_file
+REF = path_to_reference_fasta
+NAME = sample_name ("Native" and "IVT" in this case)
+~/scripts/create_3mer_fraction_file.sh $FILTERED_FILE $REF $NAME
 ```
+
 ### Run R script to Plot and Calculate 3-mer Sites
 
 Package requirements:
