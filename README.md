@@ -236,20 +236,24 @@ wc -l final*
 ```
 
 #### Plot Modified Fractions
+Use [boxplot_mods_multisample.r](https://github.com/kayleewatson/Common-Analysis-of-Direct-RNA-SequencinG-CUrrently-leads-to-Misidentification-of-5-Methylcytosine/blob/main/boxplot_mods_multisample.r) script
 Package requirements:
 * ggplot2
 Command to run R script on final concatenated file:
 ```
-~/scripts/boxplot_mods_multisample.r modified_fractions_all.tsv
+boxplot_mods_multisample.r modified_fractions_all.tsv
 ```
 
 #### Z-test and Cohen's d
+Use [ztest.r](https://github.com/kayleewatson/Common-Analysis-of-Direct-RNA-SequencinG-CUrrently-leads-to-Misidentification-of-5-Methylcytosine/blob/main/ztest.r) script
+Package requirements:
+* dplyr
 Command to run Z-test script:
 ```
 GCU_BED = path_to_final_GCU_file
 # the 'final' output from the previous "Add a column with the sample name, then combine all 'final' files in a single file for R" step
 NONGCU_BED = path_to_final_nonGCU_file
-~/scripts/ztest.r $GCU_BED $NONGCU_BED
+ztest.r $GCU_BED $NONGCU_BED
 ```
 
 ## Modified Fraction Density Plots - Sindbis virus
