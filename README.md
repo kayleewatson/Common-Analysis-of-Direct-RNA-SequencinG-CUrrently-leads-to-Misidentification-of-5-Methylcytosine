@@ -304,7 +304,7 @@ awk 'NR==FNR{a[$2];next} $2 in a{print}' common_positions.txt $NOZERO_BED > $FIL
 ### Create file with 3-mer and modified fractions
 
 #### Bash script to create 3-mer file:
-Use [create_3mer_fraction_file.sh](https://github.com/kayleewatson/Common-Analysis-of-Direct-RNA-SequencinG-CUrrently-leads-to-Misidentification-of-5-Methylcytosine/blob/main/create_3mer_fraction_file.sh) script and flanking_nt_intervals.py script
+Use [create_3mer_fraction_file.sh](https://github.com/kayleewatson/Common-Analysis-of-Direct-RNA-SequencinG-CUrrently-leads-to-Misidentification-of-5-Methylcytosine/blob/main/create_3mer_fraction_file.sh) script and [flanking_nt_intervals.py](https://github.com/kayleewatson/Common-Analysis-of-Direct-RNA-SequencinG-CUrrently-leads-to-Misidentification-of-5-Methylcytosine/blob/main/flanking_nt_intervals.py) script
 
 Command to run bash script
 ```
@@ -315,6 +315,7 @@ create_3mer_fraction_file.sh $FILTERED_FILE $REF $NAME
 ```
 
 ### Run R script to Plot and Calculate 3-mer Sites
+Use [histogram_methyl_fraction_individual.r](https://github.com/kayleewatson/Common-Analysis-of-Direct-RNA-SequencinG-CUrrently-leads-to-Misidentification-of-5-Methylcytosine/blob/main/histogram_methyl_fraction_individual.r) script
 
 Package requirements:
 * ggplot2
